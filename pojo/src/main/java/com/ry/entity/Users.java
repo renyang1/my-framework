@@ -1,14 +1,22 @@
-package com.ry;
+package com.ry.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author renyang
+ */
 @Data
+@TableName("users")
 public class Users {
     /**
      * 主键id 用户id
      */
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**

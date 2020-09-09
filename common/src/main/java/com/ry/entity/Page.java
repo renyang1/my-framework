@@ -1,4 +1,4 @@
-package com.ry.vo;
+package com.ry.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

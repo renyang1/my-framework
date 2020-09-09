@@ -116,6 +116,13 @@
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>3.1.1</version>
             </dependency>
+            <!-- mybatis-plus https://github.com/baomidou/mybatis-plus-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.4.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

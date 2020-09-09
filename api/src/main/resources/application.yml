@@ -10,7 +10,7 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 30s     # 最大等待时间
 
-mybatis:
+mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/**/*.xml

@@ -1,4 +1,4 @@
-package com.ry;
+package com.ry.entity;
 
 import lombok.Data;
 

@@ -1,8 +1,12 @@
 package com.ry.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ry.entity.Users;
 
-@Mapper
-public interface UsersMapper {
+/**
+ * @author renyang
+ */
+public interface UsersMapper extends BaseMapper<Users> {
 
+    Users getUserById(String id);
 }
