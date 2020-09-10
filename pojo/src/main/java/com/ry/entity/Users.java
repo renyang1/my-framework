@@ -16,13 +16,13 @@ public class Users {
     /**
      * 主键id 用户id
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private String id;
 
     /**
      * 用户名 用户名
      */
-    private String username;
+    private String userName;
 
     /**
      * 密码 密码
@@ -32,12 +32,12 @@ public class Users {
     /**
      * 昵称 昵称
      */
-    private String nickname;
+    private String nickName;
 
     /**
      * 真实姓名
      */
-    private String realname;
+    private String realName;
 
     /**
      * 头像
