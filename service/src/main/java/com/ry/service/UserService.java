@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.Date;
 
@@ -54,7 +55,13 @@ public class UserService {
     }
 
     public Users queryUser(String userId) {
+        Assert.isNull(userId, "参数不能为空");
         Users users = usersMapper.selectById(userId);
         return users;
+    }
+
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public void deleteUserById(Integer userId) {
+        usersMapper.deleteById(userId);
     }
 }
