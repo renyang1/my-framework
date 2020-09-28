@@ -1,6 +1,6 @@
 package com.ry.controller;
 
-import com.ry.entity.Response;
+import com.ry.vo.Response;
 import com.ry.enums.SexEnum;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,14 +1,15 @@
 package com.ry.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ry.entity.Users;
 import com.ry.mapper.UsersMapper;
 import com.ry.res.UserRes;
+import com.ry.cache.MyRedisTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.Date;
 
@@ -29,6 +30,9 @@ public class UserService {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private MyRedisTemplate myRedisTemplate;
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public Integer create(UserRes.Create res) {
@@ -55,8 +59,8 @@ public class UserService {
     }
 
     public Users queryUser(String userId) {
-        Assert.isNull(userId, "参数不能为空");
         Users users = usersMapper.selectById(userId);
+        myRedisTemplate.set("userid_" + userId, JSONObject.toJSONString(users));
         return users;
     }
 

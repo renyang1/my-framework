@@ -1,4 +1,4 @@
-package com.ry.entity;
+package com.ry.vo;
 
 import com.ry.enums.ResponseCode;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.ry.entity;
+package com.ry.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
- * @author jiawei
+ * @author renyang
  */
 @Data
 @Accessors(chain = true)

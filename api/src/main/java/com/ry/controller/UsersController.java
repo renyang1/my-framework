@@ -3,9 +3,12 @@ package com.ry.controller;
 import com.ry.service.UserService;
 import com.ry.entity.Users;
 import com.ry.res.UserRes;
-import com.ry.entity.Response;
+import com.ry.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author renyang
@@ -22,7 +25,6 @@ public class UsersController {
         return Response.of(userService.create(res).toString());
     }
 
-
     /**
      * 请求形式：http://127.0.0.1:8080/users/queryUser/1
      *
@@ -35,7 +37,7 @@ public class UsersController {
     }
 
     @GetMapping("/queryUser")
-    public Response<Users> getUser(String userId) {
+    public Response<Users> getUser(@NotNull(message = "用户编号不能为空") String userId) {
         return Response.of(userService.queryUser(userId));
     }
 

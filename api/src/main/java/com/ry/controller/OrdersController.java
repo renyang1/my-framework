@@ -2,7 +2,7 @@ package com.ry.controller;
 
 import com.ry.service.OrderService;
 import com.ry.entity.Orders;
-import com.ry.entity.Response;
+import com.ry.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
