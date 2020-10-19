@@ -1,7 +1,7 @@
 package com.ry.service;
 
-import com.ry.mapper.OrdersMapper;
 import com.ry.entity.Orders;
+import com.ry.mapper.OrdersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +22,6 @@ public class OrderService {
     public Orders queryOrder(String orderId) {
         return ordersMapper.getOrderById(orderId);
     }
+
+
 }

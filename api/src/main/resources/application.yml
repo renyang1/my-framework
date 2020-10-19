@@ -6,13 +6,14 @@ spring:
   application:
     name: my-framework
   profiles:
-    active: all,dev
+    active: dev
   lifecycle:
     timeout-per-shutdown-phase: 30s     # 最大等待时间
 
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
   mapper-locations: classpath:mapper/**/*.xml
 
 pagehelper:
@@ -21,3 +22,7 @@ pagehelper:
 
 
 
+
+logging:
+  level:
+    com.ry.mapper: debug

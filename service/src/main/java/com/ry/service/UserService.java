@@ -5,12 +5,14 @@ import com.ry.entity.Users;
 import com.ry.mapper.UsersMapper;
 import com.ry.res.UserRes;
 import com.ry.cache.MyRedisTemplate;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -31,7 +33,7 @@ public class UserService {
     @Autowired
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private MyRedisTemplate myRedisTemplate;
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
@@ -60,7 +62,7 @@ public class UserService {
 
     public Users queryUser(String userId) {
         Users users = usersMapper.selectById(userId);
-        myRedisTemplate.set("userid_" + userId, JSONObject.toJSONString(users));
+        myRedisTemplate.set("userId_" + userId, JSONObject.toJSONString(users));
         return users;
     }
 
