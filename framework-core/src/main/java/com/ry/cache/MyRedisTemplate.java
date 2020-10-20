@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 public class MyRedisTemplate implements InitializingBean {
 
 	@Autowired
-	private StringRedisTemplate redisTemplate;
+	private StringRedisTemplate stringRedisTemplate;
 
 	private HashOperations<String, String, String> opsForHash;
 	private ListOperations<String, String> opsForList;
@@ -36,15 +38,15 @@ public class MyRedisTemplate implements InitializingBean {
 
 	// ----------- Normal Command -------------
 	public boolean expire(String key, int timeout) {
-		return redisTemplate.expire(key, timeout, TimeUnit.SECONDS);
+		return stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 
 	public boolean exist(String key) {
-		return redisTemplate.hasKey(key);
+		return stringRedisTemplate.hasKey(key);
 	}
 
 	public boolean del(String key) {
-		return redisTemplate.delete(key);
+		return stringRedisTemplate.delete(key);
 	}
 
 	public long del(Collection<String> keys) {
@@ -52,16 +54,16 @@ public class MyRedisTemplate implements InitializingBean {
 			return 0L;
 		}
 
-		return redisTemplate.delete(keys);
+		return stringRedisTemplate.delete(keys);
 	}
 
 	// ----------- String Command -------------
 	public String get(String key) {
-		return redisTemplate.opsForValue().get(key);
+		return stringRedisTemplate.opsForValue().get(key);
 	}
 
 	public <T> T get(String key, Class<T> clazz) {
-		String value = redisTemplate.opsForValue().get(key);
+		String value = stringRedisTemplate.opsForValue().get(key);
 		if (value == null) {
 			return null;
 		}
@@ -74,15 +76,14 @@ public class MyRedisTemplate implements InitializingBean {
 			return;
 		}
 
-		redisTemplate.opsForValue().set(key, value);
+		stringRedisTemplate.opsForValue().set(key, value);
 	}
 
 	public void setObject(String key, Object value) {
 		if (value == null) {
 			return;
 		}
-
-		redisTemplate.opsForValue().set(key, JSON.toJSONString(value));
+		stringRedisTemplate.opsForValue().set(key, JSON.toJSONString(value));
 	}
 
 	public void setex(String key, String value, long timeout) {
@@ -99,7 +100,7 @@ public class MyRedisTemplate implements InitializingBean {
 			return;
 		}
 
-		redisTemplate.opsForValue().set(key, value, timeout, unit);
+		stringRedisTemplate.opsForValue().set(key, value, timeout, unit);
 	}
 
 	public void setexObject(String key, Object value, long timeout, TimeUnit unit) {
@@ -108,21 +109,21 @@ public class MyRedisTemplate implements InitializingBean {
 			return;
 		}
 
-		redisTemplate.opsForValue().set(key, JSON.toJSONString(value), timeout, unit);
+		stringRedisTemplate.opsForValue().set(key, JSON.toJSONString(value), timeout, unit);
 	}
 
 	public boolean setnx(String key, String value) {
 		if (value == null) {
 			return false;
 		}
-		return redisTemplate.opsForValue().setIfAbsent(key, value);
+		return stringRedisTemplate.opsForValue().setIfAbsent(key, value);
 	}
 
 	public boolean setnxObject(String key, Object value) {
 		if (value == null) {
 			return false;
 		}
-		return redisTemplate.opsForValue().setIfAbsent(key, JSON.toJSONString(value));
+		return stringRedisTemplate.opsForValue().setIfAbsent(key, JSON.toJSONString(value));
 	}
 
 	public boolean setnx(String key, String value, long timeout) {
@@ -142,7 +143,7 @@ public class MyRedisTemplate implements InitializingBean {
 			return this.setnx(key, value);
 		}
 
-		return redisTemplate.opsForValue().setIfAbsent(key, value, timeout, unit);
+		return stringRedisTemplate.opsForValue().setIfAbsent(key, value, timeout, unit);
 	}
 
 	public boolean setnxObject(String key, Object value, long timeout, TimeUnit unit) {
@@ -153,15 +154,15 @@ public class MyRedisTemplate implements InitializingBean {
 			return this.setnxObject(key, value);
 		}
 
-		return redisTemplate.opsForValue().setIfAbsent(key, JSON.toJSONString(value), timeout, unit);
+		return stringRedisTemplate.opsForValue().setIfAbsent(key, JSON.toJSONString(value), timeout, unit);
 	}
 
 	public List<String> mget(Collection<String> keys) {
-		return redisTemplate.opsForValue().multiGet(keys);
+		return stringRedisTemplate.opsForValue().multiGet(keys);
 	}
 
 	public <T> List<T> mget(Collection<String> keys, Class<T> clazz) {
-		return redisTemplate.opsForValue().multiGet(keys).stream()
+		return stringRedisTemplate.opsForValue().multiGet(keys).stream()
 				.map(x -> x == null ? null : JSON.parseObject(x, clazz)).collect(Collectors.toList());
 	}
 
@@ -169,7 +170,7 @@ public class MyRedisTemplate implements InitializingBean {
 		if (CollectionUtils.isEmpty(map)) {
 			return;
 		}
-		redisTemplate.opsForValue().multiSet(map);
+		stringRedisTemplate.opsForValue().multiSet(map);
 	}
 
 	public <T> void msetObject(Map<String, T> map) {
@@ -177,7 +178,7 @@ public class MyRedisTemplate implements InitializingBean {
 			return;
 		}
 
-		redisTemplate.opsForValue().multiSet(objectMap2StrMap(map));
+		stringRedisTemplate.opsForValue().multiSet(objectMap2StrMap(map));
 	}
 
 	/**
@@ -190,7 +191,7 @@ public class MyRedisTemplate implements InitializingBean {
 		if (CollectionUtils.isEmpty(map)) {
 			return false;
 		}
-		return redisTemplate.opsForValue().multiSetIfAbsent(map);
+		return stringRedisTemplate.opsForValue().multiSetIfAbsent(map);
 	}
 
 	/**
@@ -203,35 +204,35 @@ public class MyRedisTemplate implements InitializingBean {
 		if (CollectionUtils.isEmpty(map)) {
 			return false;
 		}
-		return redisTemplate.opsForValue().multiSetIfAbsent(objectMap2StrMap(map));
+		return stringRedisTemplate.opsForValue().multiSetIfAbsent(objectMap2StrMap(map));
 	}
 
 	public long incr(String key) {
-		return redisTemplate.opsForValue().increment(key);
+		return stringRedisTemplate.opsForValue().increment(key);
 	}
 
 	public long incrby(String key, long delta) {
-		return redisTemplate.opsForValue().increment(key, delta);
+		return stringRedisTemplate.opsForValue().increment(key, delta);
 	}
 
 	public double incrby(String key, double delta) {
-		return redisTemplate.opsForValue().increment(key, delta);
+		return stringRedisTemplate.opsForValue().increment(key, delta);
 	}
 
 	public long decr(String key) {
-		return redisTemplate.opsForValue().decrement(key);
+		return stringRedisTemplate.opsForValue().decrement(key);
 	}
 
 	public long decrby(String key, long delta) {
-		return redisTemplate.opsForValue().decrement(key, delta);
+		return stringRedisTemplate.opsForValue().decrement(key, delta);
 	}
 
 	public String getset(String key, String value) {
-		return redisTemplate.opsForValue().getAndSet(key, value);
+		return stringRedisTemplate.opsForValue().getAndSet(key, value);
 	}
 
 	public <T> T getsetObject(String key, T value) {
-		String oldValue = redisTemplate.opsForValue().getAndSet(key, JSON.toJSONString(value));
+		String oldValue = stringRedisTemplate.opsForValue().getAndSet(key, JSON.toJSONString(value));
 		return oldValue == null ? null : JSON.parseObject(oldValue, (Class<T>) value.getClass());
 	}
 
@@ -686,15 +687,26 @@ public class MyRedisTemplate implements InitializingBean {
 				.collect(Collectors.toSet());
 	}
 
+
+	// ----------- lua脚本 -------------
+	public <T> T execute(RedisScript<T> redisScript, List<String> keys, String value) {
+
+		return stringRedisTemplate.execute(redisScript, stringRedisTemplate.getValueSerializer(),
+				null, keys, value);
+//		return stringRedisTemplate.execute(redisScript, keys, value);
+
+	}
+
+
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		if (redisTemplate == null) {
+		if (stringRedisTemplate == null) {
 			return;
 		}
-		opsForHash = redisTemplate.opsForHash();
-		opsForList = redisTemplate.opsForList();
-		opsForSet = redisTemplate.opsForSet();
-		opsForZSet = redisTemplate.opsForZSet();
+		opsForHash = stringRedisTemplate.opsForHash();
+		opsForList = stringRedisTemplate.opsForList();
+		opsForSet = stringRedisTemplate.opsForSet();
+		opsForZSet = stringRedisTemplate.opsForZSet();
 	}
 
 	private <T> Map<String, String> objectMap2StrMap(Map<String, T> map) {
