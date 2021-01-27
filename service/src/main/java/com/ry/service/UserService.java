@@ -5,6 +5,7 @@ import com.ry.entity.Users;
 import com.ry.mapper.UsersMapper;
 import com.ry.res.UserRes;
 import com.ry.cache.MyRedisTemplate;
+import com.ry.utils.TransactionUtil;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +70,10 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public void deleteUserById(Integer userId) {
         usersMapper.deleteById(userId);
+        System.out.println("删除成功,id编号：" + userId);
+        TransactionUtil.afterCommit(() -> System.out.println("process after commit..."));
+//        System.out.println(1/0);
     }
+
+
 }

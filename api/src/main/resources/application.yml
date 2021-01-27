@@ -19,10 +19,6 @@ mybatis-plus:
 pagehelper:
   auto-dialect: true
 
-
-
-
-
 logging:
   level:
     com.ry.mapper: debug

@@ -129,6 +129,13 @@
                 <version>1.8.0</version>
             </dependency>
 
+            <!--  sentinel注解支持  -->
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-annotation-aspectj</artifactId>
+                <version>1.6.2</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

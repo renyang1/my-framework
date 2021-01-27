@@ -47,7 +47,7 @@ public class LockController {
         return Response.success();
     }
 
-    @RequestMapping("/singleLock")
+    @GetMapping("/singleLock")
     public Response singleLock() {
 
         log.info("进入方法{}", "singleLock");
