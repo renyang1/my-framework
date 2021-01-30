@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * <p>
  * All rights Reserved, Designed www.xiao100.com
  */
-@Target({ElementType.TYPE, ElementType.FIELD})
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LogParam {
 }

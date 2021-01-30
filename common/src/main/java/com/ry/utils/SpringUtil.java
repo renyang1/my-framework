@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * Description: 请描述你的文件
+ * Description: Spring工具类，获取上下文对象和bean对象
  *
  * @author renyang
  * @date 2021-01-27
