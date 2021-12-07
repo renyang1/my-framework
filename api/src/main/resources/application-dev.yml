@@ -4,12 +4,12 @@ spring:
       initial-size: 16
       min-idle: 16
       max-active: 32
-      url: jdbc:mysql://172.16.0.27:3306/foodie
+      url: jdbc:mysql://localhost:3306/test
       username: root
-      password: 199426
+      password: root
 
-  redis:
-    host: 172.16.0.27
+#  redis:
+    host: 127.0.0.1
     port: 6379
     timeout: 2000
     database: 0

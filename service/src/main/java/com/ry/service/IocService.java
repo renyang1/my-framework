@@ -1,6 +1,6 @@
 package com.ry.service;
 
-import com.ry.utils.SpringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import java.util.List;
  * <p>
  * All rights Reserved, Designed www.xiao100.com
  */
+@Slf4j
 @Service
 public class IocService {
 
@@ -27,9 +28,11 @@ public class IocService {
     @PostConstruct
     public void testInitMethod() {
         myList.add(name);
-        System.out.println(myList);
-        System.out.println("初始化IocService类");
+        log.info("初始化IocService类");
     }
 
+    public void test() {
+        log.info("IocService: test()");
+    }
 
 }

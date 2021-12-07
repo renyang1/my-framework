@@ -1,4 +1,4 @@
-package com.ry.service.config;
+package com.ry.config;
 
 import com.ry.entity.Users;
 import org.springframework.context.annotation.Bean;
