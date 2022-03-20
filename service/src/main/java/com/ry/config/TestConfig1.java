@@ -1,11 +1,8 @@
 package com.ry.config;
 
-import org.aspectj.lang.annotation.DeclareWarning;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * Description: 请描述你的文件
@@ -16,22 +13,23 @@ import org.springframework.stereotype.Component;
  * All rights Reserved, Designed www.xiao100.com
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(User.class)
-public class TestConfig {
+public class TestConfig1 {
 
+//    @Autowired
+//    private Cat cat;
+//
 //    @Bean
-//    public User creatIocService() {
-//        System.out.println("通过配置类方式创建Users bean");
+//    public User user() {
+//        System.out.println("通过配置类方式创建User bean");
 //        User user = new User();
 //        user.setName("ry");
 //        user.setAge(16);
-//        user.setCat(cat());
+//        user.setCat(new TestConfig().cat());
 //        return user;
 //    }
 
 //    @Bean
 //    public Cat cat() {
-//        System.out.println("实例化Cat");
 //        Cat tom = new Cat("tom", 2);
 //        return tom;
 //    }

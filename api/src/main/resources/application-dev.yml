@@ -17,3 +17,7 @@ spring:
 my-framework:
   name: ry
   nickName: 任洋爱吃肉
+
+ry:
+  name: renyang
+  age: 16
