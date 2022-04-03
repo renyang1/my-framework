@@ -1,6 +1,10 @@
 package com.ry.designPatterns.builder;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
+
+import java.util.*;
 
 public class PoolConfigTest {
 
@@ -30,5 +34,18 @@ public class PoolConfigTest {
 
         PoolConfig builder1 = builder.builder();
         System.out.println(builder1);
+    }
+
+
+    @Test
+    public void t1() {
+        int[] INFRINGEMENT_LABEL = {446, 604};
+        List<int[]> ints = Collections.singletonList(INFRINGEMENT_LABEL);
+        List<Integer> ints1 = Arrays.asList(446, 604);
+        ints1.forEach(a-> {
+            System.out.println(a);
+        });
+
+//        CollectionUtils.intersection(tagIds, ))
     }
 }
