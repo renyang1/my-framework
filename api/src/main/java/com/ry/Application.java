@@ -29,9 +29,9 @@ public class Application {
 //        Cat cat1 = user1.getCat();
 //        Cat cat2 = context.getBean(Cat.class);
 //        System.out.println(cat1 == cat2);
-        TestConfig bean = context.getBean(TestConfig.class);
-        TestConfig1 bean1 = context.getBean(TestConfig1.class);
-        System.out.println(bean == null);
-        System.out.println(bean1 == null);
+//        TestConfig bean = context.getBean(TestConfig.class);
+//        TestConfig1 bean1 = context.getBean(TestConfig1.class);
+//        System.out.println(bean == null);
+//        System.out.println(bean1 == null);
     }
 }

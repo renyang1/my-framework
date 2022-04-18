@@ -38,8 +38,8 @@ public class LogInterceptor implements HandlerInterceptor {
             log.info("接口{}:请求参数为{}", request.getRequestURI(), JSONObject.toJSONString(parameterMap));
         }
 
-        Orders orders = orderService.queryOrder("190827F4AK12R30H");
-        System.out.println(orders);
+//        Orders orders = orderService.queryOrder("190827F4AK12R30H");
+//        System.out.println(orders);
         return true;
     }
 }
