@@ -24,9 +24,6 @@ import java.util.Map;
 @Slf4j
 public class LogInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private OrderService orderService;
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HandlerMethod hm = (HandlerMethod) handler;
@@ -37,9 +34,6 @@ public class LogInterceptor implements HandlerInterceptor {
             Map<String, String[]> parameterMap = request.getParameterMap();
             log.info("接口{}:请求参数为{}", request.getRequestURI(), JSONObject.toJSONString(parameterMap));
         }
-
-//        Orders orders = orderService.queryOrder("190827F4AK12R30H");
-//        System.out.println(orders);
         return true;
     }
 }
