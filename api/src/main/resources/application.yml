@@ -24,4 +24,4 @@ logging:
     com.ry.mapper: debug
 
 # 开启后可以打印自动配置报告
-debug: true
+#debug: true

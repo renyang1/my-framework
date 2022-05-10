@@ -1,12 +1,14 @@
 package com.ry;
 
-import com.ry.config.TestConfig;
-import com.ry.config.TestConfig1;
-import com.ry.config.User;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import java.lang.reflect.Field;
+import java.util.Map;
 
 /**
  * Description: 请描述你的文件
@@ -20,18 +22,15 @@ import org.springframework.context.ConfigurableApplicationContext;
 @MapperScan("com.ry.mapper")
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-//        User user1 = context.getBean(User.class);
-//        User user2 = context.getBean(User.class);
-//        System.out.println(user1==user2);
 
-//        Cat cat1 = user1.getCat();
-//        Cat cat2 = context.getBean(Cat.class);
-//        System.out.println(cat1 == cat2);
-//        TestConfig bean = context.getBean(TestConfig.class);
-//        TestConfig1 bean1 = context.getBean(TestConfig1.class);
-//        System.out.println(bean == null);
-//        System.out.println(bean1 == null);
+        Field singletonObjects = DefaultSingletonBeanRegistry.class.getDeclaredField("singletonObjects");
+        singletonObjects.setAccessible(true);
+        ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
+        Map<String, Object> map = (Map<String, Object>) singletonObjects.get(beanFactory);
+        map.forEach((k,v) -> {
+            System.out.println(k + "=" + v);
+        });
     }
 }
