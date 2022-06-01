@@ -6,9 +6,12 @@ import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.io.Resource;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Description: 请描述你的文件
@@ -18,19 +21,12 @@ import java.util.Map;
  * <p>
  * All rights Reserved, Designed www.xiao100.com
  */
-@SpringBootApplication
+//@SpringBootApplication
 @MapperScan("com.ry.mapper")
 public class Application {
 
-    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, IOException {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-
-        Field singletonObjects = DefaultSingletonBeanRegistry.class.getDeclaredField("singletonObjects");
-        singletonObjects.setAccessible(true);
-        ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
-        Map<String, Object> map = (Map<String, Object>) singletonObjects.get(beanFactory);
-        map.forEach((k,v) -> {
-            System.out.println(k + "=" + v);
-        });
     }
+
 }
